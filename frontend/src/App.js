@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import "./App.css";
+import "./index.css";
 import image from "./img/bot_image.jpg";
 
 function App() {
@@ -61,7 +61,10 @@ function App() {
             <div className="wrapper">
                 <div className="content">
                     <div className="header">
-                        <img src="{image}" alt="" />
+                        <div className="img">
+                            <img src={image} alt="" />
+                        </div>
+                    
                     
                         <div className="right">
                             <div className="name">ChatBot</div>
