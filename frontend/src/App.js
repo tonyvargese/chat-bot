@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import "./index.css";
 import image from "./img/bot_image.jpg";
+import image1 from "./img/IQVIA.png"
 
 function App() {
     const [userQuery, setUserQuery] = useState("");
@@ -62,7 +63,7 @@ function App() {
                 <div className="content">
                     <div className="header">
                         <div className="img">
-                            <img src={image} alt="" />
+                            <img src={image1} alt="" />
                         </div>
                     
                     
