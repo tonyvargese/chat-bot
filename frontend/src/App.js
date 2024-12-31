@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import "./index.css";
-import image from "./img/bot_image.jpg";
+// import image from "./img/bot_image.jpg";
 import image1 from "./img/IQVIA.png"
 
 function App() {

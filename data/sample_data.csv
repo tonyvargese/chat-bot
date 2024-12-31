@@ -1,0 +1,21 @@
+requirement_id,process_area,requirement_description,client_name,module_name
+50.01.00,"Medicaid: Admin: Manage T-bills","Ability to create and maintain T-Bill Rates",Amgen,Medicaid
+50.01.00,"Medicaid: Admin: Manage T-bills","The system must have the ability for an authorized user to enter and modify the T-Bill Rates.",Takeda,Medicaid
+FUNC_RATE_002,"Functional: Medicaid Rates","Ability to automatically schedule upload for T-Bills as well as the ability to manually update or add new rates when necessary",Amgen,Medicaid
+50.02.00,"Medicaid: Contract Administration: Manage Contracts","The system must have the ability to set up Medicaid Programs and Supplemental State Programs with defined state customer and in accordance with Medicaid regulation.",Takeda,Medicaid
+50.01.05,"Medicaid: Admin: Divisions","The system must have the ability for Takeda OBU to operate as a separate division",Takeda,Medicaid
+50.02.00,"Medicaid: Contract Administration: Manage Contracts","The system must have the ability for an authorized user to activate a Medicaid Source and Supplemental Contract",Amgen,Medicaid
+50.02.00,"Medicaid: Contract Administration: Manage Contracts","Ability to create and maintain Medicaid Contracts",Takeda,Medicaid
+50.02.00,"Medicaid: Contract Administration: Manage Contracts","The system must have the ability for an authorized user to create and maintain a Medicaid Source and Supplemental Contract",Amgen,Medicaid
+TECH_MNDF_003,"Technical: Model N Data Flow","The system must have the ability to receive externally sourced incremental T-Bill rates via data flow for use in Medicaid calculations.",Takeda,Medicaid
+50.02.00,"Medicaid: Contract Administration: Manage Contracts","The system must have the ability to maintain Program information to include, i.e., Program Name, Program Description, Program Type, Start Date, End Date, Contact Information, Covered States, Covered Products, Rebate Rates, Rebate Calculation Method.",Amgen,Medicaid
+01.01.00.15,"Master Data: Trading Partners: Manage Customer","The system must have the ability to activate eligibility sets through a job activation",Amgen,Customer
+01.01.00.10,"Master Data: Trading Partners: Manage Customer","The system must have the ability to define customer's preferred payment method",Takeda,Customer
+FUNC_CUST_001,"Functional: Customer","Ability to source Customers and its related attributes including the designated Medicaid state from Amgen customer master (HCM)",Amgen,Customer
+01.01.00.12,"Master Data: Trading Partners: Manage Customer","The system must have the ability to create and manage eligibility sets",Takeda,Customer
+01.01.00.13,"Master Data: Trading Partners: Manage Customer","The system must have the ability to define Pay To customer for eligible trading partners",Amgen,Customer
+01.01.00.14,"Master Data: Trading Partners: Manage Customer","The system must have the ability to define Pay To customer for rebate",Takeda,Customer
+01.01.00.01,"Master Data: Trading Partners: Manage Customer","The system must have the ability to manually create trading partners",Amgen,Customer
+FUNC_CUST_002,"Functional: Customer","Ability to display the Customer primary address type (Ship to/Sold to and Rebate Address) and address information on customer search and selection screens",Takeda,Customer
+01.01.00.05,"Master Data: Trading Partners: Manage Customer","The system must have the ability to add and maintain additional trading partner attributes and associated values",Amgen,Customer
+01.01.00.03,"Master Data: Trading Partners: Manage Customer","The system must have the ability to create new trading partners through an import",Takeda,Customer
