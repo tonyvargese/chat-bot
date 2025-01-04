@@ -20,7 +20,7 @@ body{
   flex-direction: column;
   min-height: 500px;
   /* height: 580px; */
-  height: auto; /* Allow height to grow based on content */
+  /* height: auto; Allow height to grow based on content */
   max-width: 577px;
   padding: 30px 30px;
   background:  #fdfdfe;
@@ -120,6 +120,16 @@ table, th, td {
   border-collapse: collapse;
 }
 .wrapper .content {
-  flex-grow: 1; /* This makes the content section grow to take available space */
-  overflow-y: auto; /* Add scrolling if content exceeds available height */
+   flex-grow: 1; /*This makes the content section grow to take available space */
+  /* overflow-y: auto; Add scrolling if content exceeds available height */
+
 }
+
+/* .main_content{
+  overflow-y: scroll;
+} */
+/* tbody{
+  overflow-y: auto;
+  max-height: 200px;
+  display: block;
+} */

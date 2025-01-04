@@ -11,6 +11,8 @@ function App() {
     const [botMessage, setBotMessage] = useState("");
     const inputRef = useRef();
 
+     
+
     const badWords = ["badword1", "badword2", "badword3"]; // Extend this list
     const welcomeWords = ["hi", "hello", "good morning", "good evening"];
     const farewellWords = ["bye", "goodbye", "see you later"];
@@ -98,6 +100,7 @@ function App() {
                                         </tbody>
                                     </table>
                                 )}
+                                
                             </div>
                         </div>
                     </div>
