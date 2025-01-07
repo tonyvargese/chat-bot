@@ -30,7 +30,7 @@ class RequirementsRequest(BaseModel):
     module_name: str
 
 # API route to process user queries
-@app.post("/query")
+@app.post("/query", summary="Process user query", description="Fetches requirements based on user query keywords.")
 async def query(request: Request):
     try:
         data = await request.json()
@@ -75,7 +75,7 @@ async def query(request: Request):
             connection.close()
 
 # Endpoint to fetch clients
-@app.get("/clients")
+@app.get("/clients",description='Endpoint to fetch clients')
 async def get_clients():
     try:
         connection = get_db_connection()
@@ -90,7 +90,7 @@ async def get_clients():
             connection.close()
 
 # Endpoint to fetch modules
-@app.get("/modules")
+@app.get("/modules",description='Endpoint to fetch modules')
 async def get_modules():
     try:
         connection = get_db_connection()
@@ -105,7 +105,7 @@ async def get_modules():
             connection.close()
 
 # Endpoint to fetch requirements based on client and module
-@app.post("/requirements")
+@app.post("/requirements",description='Endpoint to fetch requirements based on client and module')
 async def get_requirements(req: RequirementsRequest):
     try:
         connection = get_db_connection()
@@ -128,7 +128,7 @@ async def get_requirements(req: RequirementsRequest):
             connection.close()
 
 # Test connection route
-@app.get("/test_connection")
+@app.get("/test_connection",description='Test connection route')
 async def test_connection():
     try:
         connection = get_db_connection()

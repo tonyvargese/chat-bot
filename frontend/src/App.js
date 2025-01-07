@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import "./index.css";
+import "./app.css";
 import image1 from "./img/IQVIA.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 
