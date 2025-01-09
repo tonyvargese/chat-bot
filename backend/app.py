@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import mysql.connector
+import pandas as pd
 
 app = FastAPI()
 
@@ -65,7 +66,10 @@ async def query(request: Request):
             raise HTTPException(status_code=404, detail="No relevant requirements found for your query.")
 
         result = cursor.fetchall()
-        return result
+        df = pd.DataFrame(result)
+        print(df)
+        return df.to_dict(orient='records')
+        
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

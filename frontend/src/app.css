@@ -8,7 +8,7 @@
   .wrapper {
     width: 100%;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
+    flex-direction: column;
     min-height: 500px;
     max-width: 577px;
     padding: 30px 30px;
@@ -20,7 +20,7 @@
   .wrapper .content {
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Ensures content section takes up all available space */
+    flex-grow: 1;
   }
   
   .wrapper .content .header {
@@ -49,6 +49,11 @@
     font-weight: 500;
   }
   
+  hr.line {
+    border: 0.5px solid #ddd;
+    margin: 10px 0;
+  }
+  
   .wrapper .content .main {
     margin: 30px 0 0;
   }
@@ -58,16 +63,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    margin-bottom: 20px;
   }
   
   .wrapper .content .main .main_content .messages .bot-message {
     width: 100%;
     padding: 15px;
     text-align: center;
-    background: #EDECED;
+    background: #ededed;
     font-size: 1.1em;
     border-radius: 10px;
     margin: 0 10px 10px;
+  }
+  
+  .wrapper .content .main .main_content .messages .error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
   }
   
   .wrapper .content .main .main_content .messages .human-message {
@@ -75,32 +88,87 @@
     padding: 15px;
     text-align: center;
     background: #363062;
-    color: #EDECED;
+    color: #ededed;
     font-size: 1.1em;
     border-radius: 10px;
     margin-bottom: 20px;
   }
   
-  /* Ensure bottom section stays at the bottom */
+  /* Pagination Table Styling */
+  .table-container {
+    margin-bottom: 20px;
+  }
+  
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  .table-container th,
+  .table-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table-container th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  nav.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .pagination .page-item {
+    list-style: none;
+  }
+  
+  .pagination .page-item .page-link {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 2px;
+    text-decoration: none;
+    border-radius: 3px;
+    color: #000;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: #363062;
+    color: #fff;
+  }
+  
+  .pagination .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+  
   .wrapper .content .bottom {
-    margin-top: auto; /* Push the bottom section to the bottom */
+    margin-top: auto;
   }
   
   .wrapper .content .bottom .btm {
     display: flex;
     align-items: center;
-    margin-top: 10px; /* Adjust space between table and input area */
+    margin-top: 10px;
   }
   
   .wrapper .content .bottom .btm .input textarea {
     width: 400px;
     height: 50px;
-    padding-left: 36px;
+    padding-left: 10px;
+    padding-top: 10px;
     outline: none;
     border: none;
-    background: #EDECED;
-    box-sizing: border-box;
+    background: #ededed;
     border-radius: 5px;
+    resize: none;
   }
   
   .wrapper .content .bottom .btm .btn {
@@ -122,20 +190,5 @@
   
   .wrapper .content .bottom .btm .btn button i {
     margin-left: 5px;
-  }
-  
-  /* Pagination Table Styling */
-  .table-container table,
-  .table-container th,
-  .table-container td {
-    border: 1px solid black;
-  }
-  
-  .table-container {
-    margin-bottom: 20px;
-  }
-  
-  .wrapper .content {
-    flex-grow: 1;
   }
   

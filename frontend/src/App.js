@@ -63,8 +63,6 @@ function App() {
                 setError("Error fetching data. Please try again.");
                 setResponse([]);
             });
-
-        setUserQuery(""); // Clear input after sending query
     };
 
     return (
@@ -85,59 +83,56 @@ function App() {
                     <div className="main">
                         <div className="main_content">
                             <div className="messages">
-                            
                                 {error && <div className="error-message">{error}</div>}
-                                <div className="table-container" >
-                                {response.length > 0 && (
-    <>
-                                        <table >
-                                            <thead>
-                                                <tr>
-                                                    <th>Requirement ID</th>
-                                                    <th>Process Area</th>
-                                                    <th>Requirement Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {records.map((req, index) => (
-                                                    <tr key={index}>
-                                                        <td>{req.requirement_id}</td>
-                                                        <td>{req.process_area}</td>
-                                                        <td>{req.requirement_description}</td>
+                                <div className="table-container">
+                                    {response.length > 0 && (
+                                        <>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Requirement ID</th>
+                                                        <th>Process Area</th>
+                                                        <th>Requirement Description</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                        
-                                        <nav>
-                                            <ul className="pagination justify-content-center" style={{ fontSize: "12px", margin: "0", padding: "0" }}>
-                                                <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`} style={{ margin: "0 2px" }}>
-                                                    <button className="page-link" onClick={prePage} style={{ padding: "5px 10px" }}>
-                                                        Prev
-                                                    </button>
-                                                </li>
-                                                {numbers.map((n, i) => (
-                                                    <li key={i} className={`page-item ${currentPage === n ? "active" : ""}`} style={{ margin: "0 2px" }}>
-                                                        <button
-                                                            className="page-link"
-                                                            onClick={() => changeCPage(n)}
-                                                            style={{ padding: "5px 10px" }}
-                                                        >
-                                                            {n}
+                                                </thead>
+                                                <tbody>
+                                                    {records.map((req, index) => (
+                                                        <tr key={index}>
+                                                            <td>{req.requirement_id}</td>
+                                                            <td>{req.process_area}</td>
+                                                            <td>{req.requirement_description}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+
+                                            <nav>
+                                                <ul className="pagination justify-content-center" style={{ fontSize: "12px", margin: "0", padding: "0" }}>
+                                                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`} style={{ margin: "0 2px" }}>
+                                                        <button className="page-link" onClick={prePage} style={{ padding: "5px 10px" }}>
+                                                            Prev
                                                         </button>
                                                     </li>
-                                                ))}
-                                                <li className={`page-item ${currentPage === numbers.length ? "disabled" : ""}`} style={{ margin: "0 2px" }}>
-                                                    <button className="page-link" onClick={nextPage} style={{ padding: "5px 10px" }}>
-                                                        Next
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </>
-                                )}
-
-
+                                                    {numbers.map((n, i) => (
+                                                        <li key={i} className={`page-item ${currentPage === n ? "active" : ""}`} style={{ margin: "0 2px" }}>
+                                                            <button
+                                                                className="page-link"
+                                                                onClick={() => changeCPage(n)}
+                                                                style={{ padding: "5px 10px" }}
+                                                            >
+                                                                {n}
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                    <li className={`page-item ${currentPage === numbers.length ? "disabled" : ""}`} style={{ margin: "0 2px" }}>
+                                                        <button className="page-link" onClick={nextPage} style={{ padding: "5px 10px" }}>
+                                                            Next
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </>
+                                    )}
                                 </div>
                                 {botMessage && <div className="bot-message">{botMessage}</div>}
                             </div>
