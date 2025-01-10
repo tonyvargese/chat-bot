@@ -44,7 +44,7 @@ async def query(request: Request):
         cursor = connection.cursor(dictionary=True)
 
         # Process the query to identify keywords
-        if "medicaid" in user_query.lower():
+        if "medicaid"  in user_query.lower():
             cursor.execute("""
                 SELECT requirement_id, process_area, requirement_description 
                 FROM Requirements 
@@ -67,7 +67,7 @@ async def query(request: Request):
 
         result = cursor.fetchall()
         df = pd.DataFrame(result)
-        print(df)
+        
         return df.to_dict(orient='records')
         
 
