@@ -74,7 +74,7 @@ hr.line {
     font-size: 1.1em;
     border-radius: 10px;
     margin: 10px 10px 10px 0;
-    align-self: flex-end; /* Align bot messages to the right */
+    align-self: flex-end; 
 }
 
 .wrapper .content .main .main_content .messages .user-message {
@@ -86,7 +86,7 @@ hr.line {
     font-size: 1.1em;
     border-radius: 10px;
     margin: 10px 0 10px 10px;
-    align-self: flex-start; /* Align user messages to the left */
+    align-self: flex-start; 
 }
 
 .wrapper .content .main .main_content .messages .error-message {
@@ -96,7 +96,7 @@ hr.line {
     margin-bottom: 10px;
 }
 
-/* Pagination Table Styling */
+
 .table-container {
     margin-bottom: 20px;
 }

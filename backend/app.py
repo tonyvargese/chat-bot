@@ -6,7 +6,7 @@ import pandas as pd
 
 app = FastAPI()
 
-# Enable CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,22 +15,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Database connection setup
+
 def get_db_connection():
     connection = mysql.connector.connect(
         host='localhost',
-        user='root',  # Use your MySQL username
-        password='root',  # Use your MySQL password
-        database='chatbot_project'  # Your database name
+        user='root',  
+        password='root', 
+        database='chatbot_project'  
     )
     return connection
 
-# Request schema for requirements API
+
 class RequirementsRequest(BaseModel):
     client_name: str
     module_name: str
 
-# API route to process user queries
+
 @app.post("/query", summary="Process user query", description="Fetches requirements based on user query keywords.")
 async def query(request: Request):
     try:
@@ -43,7 +43,7 @@ async def query(request: Request):
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
 
-        # Process the query to identify keywords
+        
         if "medicaid"  in user_query.lower():
             cursor.execute("""
                 SELECT requirement_id, process_area, requirement_description 
@@ -78,7 +78,7 @@ async def query(request: Request):
         if connection:
             connection.close()
 
-# Endpoint to fetch clients
+
 @app.get("/clients",description='Endpoint to fetch clients')
 async def get_clients():
     try:
@@ -93,7 +93,7 @@ async def get_clients():
         if connection:
             connection.close()
 
-# Endpoint to fetch modules
+
 @app.get("/modules",description='Endpoint to fetch modules')
 async def get_modules():
     try:
@@ -108,14 +108,14 @@ async def get_modules():
         if connection:
             connection.close()
 
-# Endpoint to fetch requirements based on client and module
+
 @app.post("/requirements",description='Endpoint to fetch requirements based on client and module')
 async def get_requirements(req: RequirementsRequest):
     try:
         connection = get_db_connection()
         cursor = connection.cursor(dictionary=True)
 
-        # Fetch requirements based on client and module
+       
         query = """
             SELECT process_area, requirement_description
             FROM Requirements
@@ -131,17 +131,17 @@ async def get_requirements(req: RequirementsRequest):
         if connection:
             connection.close()
 
-# Test connection route
+
 @app.get("/test_connection",description='Test connection route')
 async def test_connection():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # Try running a simple query, like fetching the current date/time or a simple select
+        
         cursor.execute('SELECT NOW();')
 
-        # Fetch the result of the query
+        
         result = cursor.fetchone()
 
         return {"message": "Database connected!", "current_time": result[0]}
