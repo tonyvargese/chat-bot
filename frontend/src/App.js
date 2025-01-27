@@ -1,62 +1,94 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import "./index.css";
-// import image from "./img/bot_image.jpg";
-import image1 from "./img/IQVIA.png"
+import "./app.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import DarkMode from "./components/DarkMode/DarkMode";
+import './components/DarkMode/DarkMode.css';
 
 function App() {
+    const [chatFlow, setChatFlow] = useState([]); // Unified state for messages and tables
     const [userQuery, setUserQuery] = useState("");
-    const [response, setResponse] = useState([]);
     const [error, setError] = useState("");
-    const [botMessage, setBotMessage] = useState("");
     const inputRef = useRef();
+    const chatContainerRef = useRef(null);
 
-     
-
-    const badWords = ["badword1", "badword2", "badword3"]; // Extend this list
+    const badWords = ["badword1", "badword2", "badword3"];
     const welcomeWords = ["hi", "hello", "good morning", "good evening"];
     const farewellWords = ["bye", "goodbye", "see you later"];
     const thanksWords = ["thank you", "thanks"];
 
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [chatFlow]);
+
     const handleQuery = () => {
         const userInput = userQuery.toLowerCase();
 
-        // Check for bad words
+        setChatFlow((prevFlow) => [...prevFlow, { type: "user", content: userQuery }]);
+
         if (badWords.some((word) => userInput.includes(word))) {
-            setBotMessage("Please avoid using offensive language.");
+            setChatFlow((prevFlow) => [
+                ...prevFlow,
+                { type: "bot", content: "Please avoid using offensive language." },
+            ]);
             setUserQuery("");
             return;
         }
 
-        // Handle predefined responses
         if (welcomeWords.some((word) => userInput.includes(word))) {
-            setBotMessage("Hello! How can I assist you today?");
+            setChatFlow((prevFlow) => [
+                ...prevFlow,
+                { type: "bot", content: "Hello! How can I assist you today?" },
+            ]);
             setUserQuery("");
             return;
         } else if (farewellWords.some((word) => userInput.includes(word))) {
-            setBotMessage("Goodbye! Have a great day!");
+            setChatFlow((prevFlow) => [
+                ...prevFlow,
+                { type: "bot", content: "Goodbye! Have a great day!" },
+            ]);
             setUserQuery("");
             return;
         } else if (thanksWords.some((word) => userInput.includes(word))) {
-            setBotMessage("You're welcome!");
+            setChatFlow((prevFlow) => [
+                ...prevFlow,
+                { type: "bot", content: "You're welcome!" },
+            ]);
             setUserQuery("");
             return;
         }
 
-        // Fetch API response for specific queries.
         axios
-            .post("http://localhost:5000/query", { query: userQuery })
+            .post("http://localhost:8080/query", { query: userInput })
             .then((res) => {
-                setResponse(res.data);
-                
+                setChatFlow((prevFlow) => [
+                    ...prevFlow,
+                    { type: "bot", content: "Here are your results. Scroll down for more details." },
+                    { type: "table", data: res.data, currentPage: 1 },
+                ]);
                 setError("");
-                setUserQuery("");
             })
             .catch((err) => {
                 console.error("Error:", err);
                 setError("Error fetching data. Please try again.");
-                setResponse([]);
+                setChatFlow((prevFlow) => [
+                    ...prevFlow,
+                    { type: "bot", content: "Error fetching data. Please try again." },
+                ]);
             });
+        setUserQuery("");
+    };
+
+    const changePage = (tableIndex, newPage) => {
+        setChatFlow((prevFlow) => {
+            const updatedFlow = [...prevFlow];
+            if (updatedFlow[tableIndex].type === "table") {
+                updatedFlow[tableIndex].currentPage = newPage;
+            }
+            return updatedFlow;
+        });
     };
 
     return (
@@ -65,42 +97,78 @@ function App() {
                 <div className="content">
                     <div className="header">
                         <div className="img">
-                            <img src={image1} alt="" />
+                            <img src="https://support.iqvia.com/f57d809e1b2781582f3aa683604bcb83.iix" alt="logo" />
                         </div>
-                    
-                    
                         <div className="right">
                             <div className="name">ChatBot</div>
                             <div className="status">{error ? "Inactive" : "Active"}</div>
+                            <DarkMode />
                         </div>
                     </div>
-                    <hr  className="line"/>
+                    <hr className="line" />
                     <div className="main">
                         <div className="main_content">
-                            <div className="messages">
-                                {botMessage && <div className="bot-message">{botMessage}</div>}
-                                {error && <div className="error-message">{error}</div>}
-                                {response.length > 0 && (
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Requirement ID</th>
-                                                <th>Process Area</th>
-                                                <th>Requirement Description</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {response.map((req, index) => (
-                                                <tr key={index}>
-                                                    <td>{req.requirement_id}</td>
-                                                    <td>{req.process_area}</td>
-                                                    <td>{req.requirement_description}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                )}
-                                
+                            <div className="messages scrollable" ref={chatContainerRef}>
+                                {chatFlow.map((item, index) => {
+                                    if (item.type === "user" || item.type === "bot") {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`message ${item.type === "user" ? "user-message" : "bot-message"}`}
+                                            >
+                                                <span>{item.content}</span>
+                                            </div>
+                                        );
+                                    } else if (item.type === "table") {
+                                        const recordsPerPage = 5;
+                                        const { data, currentPage } = item;
+                                        const lastIndex = currentPage * recordsPerPage;
+                                        const firstIndex = lastIndex - recordsPerPage;
+                                        const records = data.slice(firstIndex, lastIndex);
+                                        const totalPages = Math.ceil(data.length / recordsPerPage);
+
+                                        return (
+                                            <div key={index} className="table-container">
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Requirement ID</th>
+                                                            <th>Process Area</th>
+                                                            <th>Requirement Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {records.map((req, idx) => (
+                                                            <tr key={idx}>
+                                                                <td>{req.requirement_id}</td>
+                                                                <td>{req.process_area}</td>
+                                                                <td>{req.requirement_description}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                                <nav>
+                                                    <ul className="pagination justify-content-center">
+                                                        {Array.from({ length: totalPages }, (_, i) => (
+                                                            <li
+                                                                key={i}
+                                                                className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
+                                                            >
+                                                                <button
+                                                                    className="page-link"
+                                                                    onClick={() => changePage(index, i + 1)}
+                                                                >
+                                                                    {i + 1}
+                                                                </button>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        );
+                                    }
+                                    return null;
+                                })}
                             </div>
                         </div>
                     </div>
