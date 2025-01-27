@@ -2,11 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DarkMode from "./components/DarkMode/DarkMode";
-import './components/DarkMode/DarkMode.css';
+// import DarkMode from "./components/DarkMode/DarkMode";
+// import './components/DarkMode/DarkMode.css';
 
 function App() {
-    const [chatFlow, setChatFlow] = useState([]); // Unified state for messages and tables
+    const [chatFlow, setChatFlow] = useState([]); 
     const [userQuery, setUserQuery] = useState("");
     const [error, setError] = useState("");
     const inputRef = useRef();
@@ -102,7 +102,7 @@ function App() {
                         <div className="right">
                             <div className="name">ChatBot</div>
                             <div className="status">{error ? "Inactive" : "Active"}</div>
-                            <DarkMode />
+                            {/* <DarkMode /> */}
                         </div>
                     </div>
                     <hr className="line" />
@@ -129,8 +129,8 @@ function App() {
 
                                         return (
                                             <div key={index} className="table-container">
-                                                <table>
-                                                    <thead>
+                                                <table className="table table-bordered table-striped">
+                                                    <thead className="thead-dark">
                                                         <tr>
                                                             <th>Requirement ID</th>
                                                             <th>Process Area</th>
@@ -147,8 +147,22 @@ function App() {
                                                         ))}
                                                     </tbody>
                                                 </table>
-                                                <nav>
+                                                <nav aria-label="Page navigation">
                                                     <ul className="pagination justify-content-center">
+                                                        {/* Previous Button */}
+                                                        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                                                            <button
+                                                                className="page-link"
+                                                                onClick={() => changePage(index, currentPage - 1)}
+                                                                disabled={currentPage === 1}
+                                                                aria-label="Previous"
+                                                            >
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                                <span className="sr-only">Previous</span>
+                                                            </button>
+                                                        </li>
+
+                                                        {/* Page Numbers */}
                                                         {Array.from({ length: totalPages }, (_, i) => (
                                                             <li
                                                                 key={i}
@@ -162,6 +176,19 @@ function App() {
                                                                 </button>
                                                             </li>
                                                         ))}
+
+                                                        {/* Next Button */}
+                                                        <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                                                            <button
+                                                                className="page-link"
+                                                                onClick={() => changePage(index, currentPage + 1)}
+                                                                disabled={currentPage === totalPages}
+                                                                aria-label="Next"
+                                                            >
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                                <span className="sr-only">Next</span>
+                                                            </button>
+                                                        </li>
                                                     </ul>
                                                 </nav>
                                             </div>
@@ -175,14 +202,20 @@ function App() {
                     <div className="bottom">
                         <div className="btm">
                             <div className="input">
-                                <textarea
-                                    rows="2"
-                                    id="input"
-                                    placeholder="Enter your query"
-                                    ref={inputRef}
-                                    value={userQuery}
-                                    onChange={(e) => setUserQuery(e.target.value)}
-                                ></textarea>
+                            <textarea
+                                rows="2"
+                                id="input"
+                                placeholder="Type your message"
+                                ref={inputRef}
+                                value={userQuery}
+                                onChange={(e) => setUserQuery(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter" && !e.shiftKey) {
+                                        e.preventDefault(); // Prevent new line
+                                        handleQuery(); // Trigger the query
+                                    }
+                                }}
+                            ></textarea>
                             </div>
                             <div className="btn">
                                 <button onClick={handleQuery}>
